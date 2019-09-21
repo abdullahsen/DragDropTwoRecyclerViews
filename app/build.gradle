@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 29
@@ -29,4 +31,8 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$ver.appcompat"
     implementation "com.jakewharton:butterknife:$ver.butterknife"
     annotationProcessor "com.jakewharton:butterknife-compiler:$ver.butterknife"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+}
+repositories {
+    mavenCentral()
 }

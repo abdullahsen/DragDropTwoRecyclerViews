@@ -36,42 +36,40 @@ class DragListener internal constructor(private val listener: Listener) : View.O
                             }
                         }
 
-                        if (viewSource != null) {
-                            val source = viewSource.parent as RecyclerView
+                        val source = viewSource.parent as RecyclerView
 
-                            val adapterSource = source.adapter as ListAdapter?
-                            val positionSource = viewSource.tag as Int
-                            val sourceId = source.id
+                        val adapterSource = source.adapter as ListAdapter?
+                        val positionSource = viewSource.tag as Int
+                        val sourceId = source.id
 
-                            val list = adapterSource!!.list?.get(positionSource)
-                            val listSource = adapterSource.list
+                        val list = adapterSource?.list?.get(positionSource) as String
+                        val listSource = adapterSource.list as ArrayList
 
-                            listSource.removeAt(positionSource)
-                            adapterSource.updateList(listSource)
-                            adapterSource.notifyDataSetChanged()
+                        listSource.removeAt(positionSource)
+                        adapterSource.updateList(listSource)
+                        adapterSource.notifyDataSetChanged()
 
-                            val adapterTarget = target.adapter as ListAdapter?
-                            val customListTarget = adapterTarget!!.list
-                            if (positionTarget >= 0) {
-                                customListTarget.add(positionTarget, list)
-                            } else {
-                                customListTarget.add(list)
-                            }
-                            adapterTarget.updateList(customListTarget)
-                            adapterTarget.notifyDataSetChanged()
+                        val adapterTarget = target.adapter as ListAdapter?
+                        val customListTarget = adapterTarget?.list as ArrayList
+                        if (positionTarget >= 0) {
+                            customListTarget.add(positionTarget, list)
+                        } else {
+                            customListTarget.add(list)
+                        }
+                        adapterTarget.updateList(customListTarget)
+                        adapterTarget.notifyDataSetChanged()
 
-                            if (sourceId == rvBottom && adapterSource.itemCount < 1) {
-                                listener.setEmptyListBottom(true)
-                            }
-                            if (viewId == tvEmptyListBottom) {
-                                listener.setEmptyListBottom(false)
-                            }
-                            if (sourceId == rvTop && adapterSource.itemCount < 1) {
-                                listener.setEmptyListTop(true)
-                            }
-                            if (viewId == tvEmptyListTop) {
-                                listener.setEmptyListTop(false)
-                            }
+                        if (sourceId == rvBottom && adapterSource.itemCount < 1) {
+                            listener.setEmptyListBottom(true)
+                        }
+                        if (viewId == tvEmptyListBottom) {
+                            listener.setEmptyListBottom(false)
+                        }
+                        if (sourceId == rvTop && adapterSource.itemCount < 1) {
+                            listener.setEmptyListTop(true)
+                        }
+                        if (viewId == tvEmptyListTop) {
+                            listener.setEmptyListTop(false)
                         }
                     }
                 }

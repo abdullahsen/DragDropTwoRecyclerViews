@@ -12,13 +12,9 @@ import android.widget.TextView
 
 import androidx.recyclerview.widget.RecyclerView
 
-import butterknife.BindView
-import butterknife.ButterKnife
-
-internal class ListAdapter(list: List<String>, private val listener: Listener?) : RecyclerView.Adapter<ListAdapter.ListViewHolder>(), View.OnTouchListener {
+internal class ListAdapter(list: List<String>, val listener: Listener?) : RecyclerView.Adapter<ListAdapter.ListViewHolder>(), View.OnTouchListener {
 
     var list: List<String>? = null
-        private set
 
     val dragInstance: DragListener?
         get() {
@@ -41,15 +37,15 @@ internal class ListAdapter(list: List<String>, private val listener: Listener?) 
     }
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
-        holder.text!!.text = list!![position]
-        holder.frameLayout!!.tag = position
-        holder.frameLayout!!.setOnTouchListener(this)
-        holder.frameLayout!!.setOnDragListener(DragListener(listener!!))
+        holder.text?.text = list?.get(position)
+        holder.frameLayout?.tag = position
+        holder.frameLayout?.setOnTouchListener(this)
+        holder.frameLayout?.setOnDragListener(listener?.let { DragListener(it) })
     }
 
 
     override fun getItemCount(): Int {
-        return list!!.size
+        return list?.size ?: 0
     }
 
     override fun onTouch(v: View, event: MotionEvent): Boolean {
@@ -72,14 +68,8 @@ internal class ListAdapter(list: List<String>, private val listener: Listener?) 
         this.list = list
     }
 
-    internal inner class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        @BindView(R.id.text)
-        var text: TextView? = null
-        @BindView(R.id.frame_layout_item)
-        var frameLayout: FrameLayout? = null
-
-        init {
-            ButterKnife.bind(this, itemView)
-        }
+    inner class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        var text: TextView? = itemView.findViewById(R.id.text)
+        var frameLayout: FrameLayout? = itemView.findViewById(R.id.frame_layout_item)
     }
 }

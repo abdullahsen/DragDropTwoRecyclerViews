@@ -29,8 +29,6 @@ ver.recycler = "1.1.0-beta04"
 dependencies {
     implementation "androidx.recyclerview:recyclerview:$ver.recycler"
     implementation "androidx.appcompat:appcompat:$ver.appcompat"
-    implementation "com.jakewharton:butterknife:$ver.butterknife"
-    annotationProcessor "com.jakewharton:butterknife-compiler:$ver.butterknife"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
 repositories {
